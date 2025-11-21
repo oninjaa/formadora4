@@ -1,0 +1,86 @@
+<ion-content
+  [fullscreen]="true"
+  class="ion-padding"
+  style="padding-bottom: 70px"
+>
+  <div class="test">
+    <div class="welcome-container">
+      <!-- Menu Principal (quando usuário já está cadastrado) -->
+      <div class="main-menu" *ngIf="hasUser">
+        <div class="user-greeting"></div>
+
+        <ion-button
+          expand="block"
+          fill="clear"
+          color="medium"
+          (click)="changeUser()"
+          class="change-user-button"
+        >
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          Trocar de Usuário
+        </ion-button>
+      </div>
+
+      <!-- Tela de Cadastro (primeira vez) -->
+      <div class="welcome-card" *ngIf="!hasUser">
+        <ion-icon name="school-outline" class="welcome-icon"></ion-icon>
+
+        <h1>Bem-vindo!</h1>
+
+        <div class="quiz-instructions">
+          <h3>Sobre o Quiz:</h3>
+          <p>
+            O quiz contém 15 perguntas de múltipla escolha. Ao final você verá
+            seu resultado e poderá rever as respostas. Responda com atenção e
+            aproveite para aprender sobre privacidade e ética digital.
+          </p>
+        </div>
+
+        <div class="input-section">
+          <ion-item class="name-input" (click)="onItemClick()">
+            <ion-label position="stacked">Digite seu nome</ion-label>
+            <ion-input
+              #nameInput
+              [(ngModel)]="userName"
+              type="text"
+              placeholder="Nome"
+              (keyup.enter)="startQuiz()"
+              (click)="onInputClick()"
+            ></ion-input>
+          </ion-item>
+
+          <div class="quiz-instructions">
+            <h3>Instruções para o acesso ao Quis:</h3>
+            <p>
+              Digite seu nome no campo acima e clique em "Entrar" para começar.
+              Após entrar, você será direcionado para a aba de Conteúdo. Lá você
+              poderá acessar o quiz.
+            </p>
+          </div>
+
+          <ion-button
+            expand="block"
+            (click)="startQuiz()"
+            [disabled]="!userName.trim()"
+            class="start-button"
+          >
+            <ion-icon name="play-outline" slot="start"></ion-icon>
+            Entrar
+          </ion-button>
+          <!-- Botão de debug (sempre habilitado) para testar clique -->
+          <ion-button
+            expand="block"
+            size="small"
+            color="tertiary"
+            (click)="onStartClick()"
+            class="debug-start"
+          >
+            Debug Entrar
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-footer-navigation currentPage="welcome"></app-footer-navigation>

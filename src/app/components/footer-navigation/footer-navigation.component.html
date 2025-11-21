@@ -1,0 +1,27 @@
+<ion-footer>
+  <ion-tab-bar>
+    <ion-tab-button
+      [routerLink]="['/conteudo']"
+      [class.active]="currentPage === 'conteudo'"
+    >
+      <ion-icon name="game-controller-outline"></ion-icon>
+      <ion-label>Conteúdo</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      [routerLink]="['/welcome']"
+      [class.active]="currentPage === 'welcome'"
+    >
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      [routerLink]="['/about']"
+      [class.active]="currentPage === 'about'"
+    >
+      <ion-icon name="help-outline"></ion-icon>
+      <ion-label>Sobre</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
