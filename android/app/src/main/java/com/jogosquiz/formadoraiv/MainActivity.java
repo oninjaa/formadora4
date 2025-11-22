@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.jogosquiz.formadoraiv;
 
 import com.getcapacitor.BridgeActivity;
 

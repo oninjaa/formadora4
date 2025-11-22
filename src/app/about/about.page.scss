@@ -1,4 +1,4 @@
-/* Estilos para efeito de cascata na página Sobre */
+/* Efeito cascata removido: estilos simplificados para página Sobre */
 .about-container {
 	display: flex;
 	justify-content: center;
@@ -11,12 +11,12 @@
 	text-align: center;
 }
 
+/* Linhas exibidas estaticamente (sem animação) */
 .cascade-line {
-	opacity: 0;
-	transform: translateY(10px);
+	opacity: 1;
+	transform: none;
 	margin: 6px 0;
 	color: var(--ion-color-medium);
-	animation: cascadeIn 420ms ease forwards;
 }
 
 .cascade-line.app-name {
@@ -38,23 +38,7 @@
 	color: var(--ion-color-medium);
 }
 
-/* stagger delays */
-.cascade-container .cascade-line:nth-child(1) { animation-delay: 0ms; }
-.cascade-container .cascade-line:nth-child(2) { animation-delay: 120ms; }
-.cascade-container .cascade-line:nth-child(3) { animation-delay: 240ms; }
-.cascade-container .cascade-line:nth-child(4) { animation-delay: 360ms; }
-.cascade-container .cascade-line:nth-child(5) { animation-delay: 480ms; }
-.cascade-container .cascade-line:nth-child(6) { animation-delay: 600ms; }
-.cascade-container .cascade-line:nth-child(7) { animation-delay: 720ms; }
-
-@keyframes cascadeIn {
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Reveal on scroll styles */
+/* Tópicos exibidos sem transições (revelação instantânea) */
 .topics {
 	max-width: 800px;
 	width: 100%;
@@ -67,9 +51,9 @@
 	border-radius: 10px;
 	margin-bottom: 14px;
 	box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-	transform: translateY(12px);
-	opacity: 0;
-	transition: transform 420ms ease, opacity 420ms ease;
+	transform: none;
+	opacity: 1;
+	transition: none;
 }
 
 .topic-title {
@@ -86,20 +70,13 @@
 	line-height: 1.5;
 }
 
-/* class added when element enters viewport */
-.reveal.in-view,
+/* Remover qualquer dependência de classes JS de "reveal" */
+.reveal,
+.in-view,
 .topic-block.in-view {
-	transform: translateY(0);
-	opacity: 1;
+	transform: none !important;
+	opacity: 1 !important;
 }
-
-/* Stagger via nth-child for nice cascade while scrolling */
-.topics .topic-block:nth-child(1) { transition-delay: 0ms; }
-.topics .topic-block:nth-child(2) { transition-delay: 60ms; }
-.topics .topic-block:nth-child(3) { transition-delay: 120ms; }
-.topics .topic-block:nth-child(4) { transition-delay: 180ms; }
-.topics .topic-block:nth-child(5) { transition-delay: 240ms; }
-.topics .topic-block:nth-child(6) { transition-delay: 300ms; }
 
 @media (max-width: 576px) {
 	.topic-title { font-size: 15px; }

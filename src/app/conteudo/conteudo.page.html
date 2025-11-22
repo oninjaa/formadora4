@@ -1,62 +1,57 @@
-<ion-content
-    [fullscreen]="true"
-  >
-    <div class="conteudo-container">
-      <div class="user-greeting">
-        <ion-icon name="person-circle" class="user-icon-large"></ion-icon>
-        <h2>Olá, {{ currentUserName }}</h2>
-        <p class="subtitle">
-          Escolha um dos conteúdos abaixo para começar: o Quiz, Jogos ou ver
-          suas Estatísticas.
-        </p>
-      </div>
-
-      <div class="menu-options">
-        <ion-card
-          class="menu-card quiz-card"
-          (click)="goToQuiz()"
-          routerLink="/quiz"
-          button
-        >
-          <ion-card-content>
-            <ion-icon name="school-outline" class="menu-icon"></ion-icon>
-            <h3>Quiz de Ética Digital</h3>
-            <p>Responda perguntas e acompanhe seu desempenho.</p>
-            <ion-badge color="primary">15 perguntas</ion-badge>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card
-          class="menu-card hangman-card"
-          (click)="goToHangman()"
-          routerLink="/hangman"
-          button
-        >
-          <ion-card-content>
-            <ion-icon
-              name="game-controller-outline"
-              class="menu-icon"
-            ></ion-icon>
-            <h3>Jogo da Forca</h3>
-            <p>Um jogo divertido para reforçar termos e conceitos.</p>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card
-          class="menu-card stats-card"
-          (click)="goToStatistics()"
-          routerLink="/statistics"
-          button
-        >
-          <ion-card-content>
-            <ion-icon name="stats-chart-outline" class="menu-icon"></ion-icon>
-            <h3>Minhas Estatísticas</h3>
-            <p>Veja seu progresso ao longo do tempo.</p>
-          </ion-card-content>
-        </ion-card>
-      </div>
+<ion-content [fullscreen]="true">
+  <div class="conteudo-container">
+    <div class="user-greeting">
+      <ion-icon name="person-circle" class="user-icon-large"></ion-icon>
+      <h2>Olá, {{ currentUserName }}</h2>
+      <p class="subtitle">
+        Escolha um dos conteúdos abaixo para começar: o Quiz, Jogos ou ver suas
+        Estatísticas.
+      </p>
     </div>
-  </ion-content>
+
+    <div class="menu-options">
+      <ion-card
+        class="menu-card quiz-card"
+        (click)="goToQuiz()"
+        routerLink="/quiz"
+        button
+      >
+        <ion-card-content>
+          <ion-icon name="school-outline" class="menu-icon"></ion-icon>
+          <h3>Quiz de Ética Digital</h3>
+          <p>Responda perguntas e acompanhe seu desempenho.</p>
+          <ion-badge color="primary">15 perguntas</ion-badge>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card
+        class="menu-card hangman-card"
+        (click)="goToHangman()"
+        routerLink="/hangman"
+        button
+      >
+        <ion-card-content>
+          <ion-icon name="game-controller-outline" class="menu-icon"></ion-icon>
+          <h3>Jogo da Forca</h3>
+          <p>Um jogo divertido para reforçar termos e conceitos.</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card
+        class="menu-card stats-card"
+        (click)="goToStatistics()"
+        routerLink="/statistics"
+        button
+      >
+        <ion-card-content>
+          <ion-icon name="stats-chart-outline" class="menu-icon"></ion-icon>
+          <h3>Minhas Estatísticas</h3>
+          <p>Veja seu progresso ao longo do tempo.</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
 
 <app-footer-navigation
   [currentPage]="'conteudo'"

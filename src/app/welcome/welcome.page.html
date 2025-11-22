@@ -90,17 +90,14 @@
         </div>
 
         <div class="input-section">
-          <ion-item class="name-input">
-            <ion-label position="stacked">Digite seu nome</ion-label>
+            <ion-label>Digite seu nome: </ion-label>
             <ion-input
-              #nameInput
               [(ngModel)]="userName"
               type="text"
-              placeholder="Nome"
+              placeholder="Digite seu nome"
               (keyup.enter)="startQuiz()"
               (click)="onInputClick()"
             ></ion-input>
-          </ion-item>
 
           <div class="quiz-instructions">
             <h3>Instruções para o acesso ao Quis:</h3>

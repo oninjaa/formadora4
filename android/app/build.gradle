@@ -1,16 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "io.ionic.starter"
+    namespace "com.jogosquiz.formadoraiv"
     compileSdk rootProject.ext.compileSdkVersion
-    
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-    
     defaultConfig {
-        applicationId "io.ionic.starter"
+        applicationId "com.jogosquiz.formadoraiv"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
