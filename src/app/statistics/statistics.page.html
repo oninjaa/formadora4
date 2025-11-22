@@ -139,7 +139,7 @@
             <ion-icon name="school-outline"></ion-icon>
             <p>Faça um quiz para ver seu desempenho por categoria!</p>
             <ion-button (click)="goToQuiz()" color="primary">
-              Fazer Primeiro Quiz
+              Jogar
             </ion-button>
           </div>
         </ion-card-content>
@@ -212,8 +212,6 @@
 
       <!-- Ações -->
       <div class="action-buttons">
-
-
         <ion-button
           *ngIf="stats.attempts.length > 0"
           expand="block"
@@ -353,9 +351,13 @@
 
           <div *ngIf="hangmanStats.gamesPlayed === 0" class="empty-state">
             <ion-icon name="game-controller-outline"></ion-icon>
-            <p>Nenhum jogo realizado ainda.</p>
-            <ion-button routerLink="/hangman" (click)="goToHangman()" color="secondary">
-              Jogar Agora
+            <p>Nenhum jogo da forca realizado ainda.</p>
+            <ion-button
+              routerLink="/hangman"
+              (click)="goToHangman()"
+              color="secondary"
+            >
+              Jogar
             </ion-button>
           </div>
         </ion-card-content>
@@ -363,8 +365,6 @@
 
       <!-- Ações -->
       <div class="action-buttons">
-
-
         <ion-button
           *ngIf="hangmanStats.gamesPlayed > 0"
           expand="block"
@@ -381,10 +381,25 @@
     <!-- Fim do conteúdo do Jogo da Forca -->
   </div>
 
-  <!-- Estado vazio -->
-  <div class="empty-container" *ngIf="!stats || stats.totalAttempts === 0">
+  <!-- Estados vazios separados por aba -->
+  <!-- Estado vazio para a aba Quiz -->
+  <div
+    class="empty-container"
+    *ngIf="activeTab === 'quiz' && (!stats || (stats?.attempts?.length === 0))"
+  >
     <ion-icon name="bar-chart-outline" class="empty-icon"></ion-icon>
-    <h2>Nenhuma Estatística Ainda</h2>
+    <h2>Nenhuma Estatística do Quiz</h2>
     <p>Faça seu primeiro quiz para ver suas estatísticas e evolução!</p>
+
+  </div>
+
+  <!-- Estado vazio para a aba Jogo da Forca -->
+  <div
+    class="empty-container"
+    *ngIf="activeTab === 'hangman' && (!hangmanStats || hangmanStats?.gamesPlayed === 0)"
+  >
+    <ion-icon name="game-controller-outline" class="empty-icon"></ion-icon>
+    <h2>Nenhum Jogo da Forca Ainda</h2>
+    <p>Jogue uma partida da Forca para ver suas estatísticas!</p>
   </div>
 </ion-content>
