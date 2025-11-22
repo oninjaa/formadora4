@@ -1,50 +1,164 @@
+/* Styles for Conteúdo page */
 .conteudo-container {
-	max-width: 900px;
-	margin: 0 auto;
+  max-width: 960px;
+  margin: 0 auto;
+  /* safe bottom padding to avoid footer overlap but avoid large gaps */
+  padding: 20px 18px calc(env(safe-area-inset-bottom, 0px) + 12px);
 }
 
 .user-greeting {
-	text-align: center;
-	margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  margin-bottom: 18px;
 
-	.user-icon-large {
-		font-size: 72px;
-		color: var(--ion-color-primary);
-		margin-bottom: 8px;
-	}
+  .user-icon-large {
+    font-size: 72px;
+    color: var(--ion-color-primary);
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.08));
+  }
 
-	h2 {
-		margin: 0 0 6px 0;
-		font-size: 20px;
-		color: var(--ion-color-dark);
-	}
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ion-color-dark);
+  }
 
-	.subtitle {
-		margin: 0;
-		color: var(--ion-color-medium);
-		font-size: 14px;
-	}
+  .subtitle {
+    margin: 6px 0 0 0;
+    color: var(--ion-color-medium);
+    max-width: 720px;
+    line-height: 1.45;
+    font-size: 14px;
+  }
 }
 
 .menu-options {
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 8px;
 }
 
 .menu-card {
-	ion-card-content {
-		display: flex;
-		gap: 12px;
-		align-items: center;
-	}
+  /* explicit background to ensure contrast (falls back to white) */
+  background: var(--ion-card-background, #ffffff);
+  --background: linear-gradient(180deg, rgba(253, 252, 252, 0.98), rgba(236, 235, 235, 0.98));
+  border-radius: 12px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  display: flex;
+  align-items: stretch;
 
-	.menu-icon {
-		font-size: 44px;
-		color: var(--ion-color-primary);
-	}
+  ion-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px;
+    width: 100%;
+  }
 
-	h3 { margin: 0; font-size: 16px; }
-	p { margin: 0; color: var(--ion-color-medium); }
+  .menu-icon {
+    font-size: 36px;
+    color: var(--ion-color-primary);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(0,0,0,0.88) !important;
+  }
+
+  p {
+    margin: 0;
+    color: rgba(0,0,0,0.75) !important;
+    font-size: 14px;
+  }
+
+  ion-badge {
+    color: rgba(0,0,0,0.65) !important;
+  }
+
+  ion-badge {
+    margin-top: 8px;
+    align-self: start;
+  }
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(16, 24, 40, 0.08);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
 }
 
+.quiz-card .menu-icon {
+  color: var(--ion-color-primary);
+}
+
+.hangman-card .menu-icon {
+  color: var(--ion-color-secondary);
+}
+
+.stats-card .menu-icon {
+  color: var(--ion-color-tertiary);
+}
+
+/* accessibility: clear focus outline for keyboard users */
+.menu-card:focus-within {
+  outline: 3px solid rgba(var(--ion-color-primary-rgb), 0.12);
+  outline-offset: 4px;
+}
+
+/* small screens tweaks */
+@media (max-width: 576px) {
+  .conteudo-container {
+    padding: 14px 12px calc(env(safe-area-inset-bottom, 0px) + 12px);
+  }
+
+  .user-greeting .user-icon-large {
+    font-size: 56px;
+  }
+
+  .menu-card ion-card-content {
+    padding: 14px;
+  }
+
+  .menu-icon {
+    font-size: 30px;
+  }
+}
+
+/* Dark mode adjustments: ensure contrast on dark backgrounds */
+@media (prefers-color-scheme: dark) {
+  .menu-card {
+    background: linear-gradient(180deg, rgba(34,34,34,0.92), rgba(22,22,22,0.92));
+  }
+
+  .menu-card h3,
+  .menu-card p,
+  .menu-card ion-badge,
+  .user-greeting h2,
+  .user-greeting .subtitle {
+    color: rgba(255,255,255,0.92) !important;
+  }
+
+  .menu-icon {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+}
+
+/* Ensure clickable area is large on touch devices */
+.menu-card ion-card-content,
+.menu-card {
+  -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+}

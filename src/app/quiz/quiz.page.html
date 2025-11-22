@@ -1,30 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button (click)="exitQuiz()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-        <ion-label>Sair</ion-label>
-      </ion-button>
-      <ion-button (click)="viewStats()">
-        <ion-icon name="stats-chart-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Quiz de Ética Digital</ion-title>
-  
-  </ion-toolbar>
-  <ion-toolbar>
-    <ion-progress-bar [value]="progress" color="success"></ion-progress-bar>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar
+  color="Dark"
+  [class.transparent-bar]="!headerVisible"
+  [class.dark-bar]="headerVisible"
+  [class.compact]="!headerVisible"
+>
+  <ion-buttons slot="start">
+    <ion-button (click)="exitQuiz()">
+      <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+      Sair
+    </ion-button>
+  </ion-buttons>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-title style="text-align: center">
+    <ion-icon name="school-outline"></ion-icon>
+    Quiz de Ética Digital
+  </ion-title>
+
+  <ion-progress-bar [value]="progress" color="success"></ion-progress-bar>
+</ion-toolbar>
+
+<ion-content
+  [fullscreen]="true"
+  class="ion-padding"
+  (ionScroll)="onScroll($event)"
+  [scrollEvents]="true"
+>
   <div class="quiz-container" *ngIf="currentQuestion">
     <div class="question-header">
       <ion-chip color="primary" class="question-number">
         <ion-icon name="help-circle-outline"></ion-icon>
         <ion-label>Pergunta {{ getQuestionNumber() }}</ion-label>
       </ion-chip>
-      
+
       <ion-chip color="tertiary" class="category-chip">
         <ion-icon name="folder-outline"></ion-icon>
         <ion-label>{{ currentQuestion.category }}</ion-label>
@@ -35,7 +42,7 @@
       <h2 class="question-text">{{ currentQuestion.question }}</h2>
 
       <div class="options-container">
-        <ion-card 
+        <ion-card
           *ngFor="let option of shuffledOptions; let i = index"
           [class]="'option-card ' + getOptionClass(i)"
           (click)="selectAnswer(i)"
@@ -45,14 +52,14 @@
             <div class="option-content">
               <div class="option-letter">{{ getOptionLetter(i) }}</div>
               <div class="option-text">{{ option }}</div>
-              <ion-icon 
-                *ngIf="showExplanation && i === correctAnswerIndex" 
-                name="checkmark-circle" 
+              <ion-icon
+                *ngIf="showExplanation && i === correctAnswerIndex"
+                name="checkmark-circle"
                 class="result-icon correct-icon"
               ></ion-icon>
-              <ion-icon 
-                *ngIf="showExplanation && i === selectedAnswer && !isCorrect" 
-                name="close-circle" 
+              <ion-icon
+                *ngIf="showExplanation && i === selectedAnswer && !isCorrect"
+                name="close-circle"
                 class="result-icon incorrect-icon"
               ></ion-icon>
             </div>
@@ -61,10 +68,15 @@
       </div>
 
       <div class="explanation-container" *ngIf="showExplanation">
-        <ion-card [color]="isCorrect ? 'success' : 'danger'" class="explanation-card">
+        <ion-card
+          [color]="isCorrect ? 'success' : 'danger'"
+          class="explanation-card"
+        >
           <ion-card-header>
             <ion-card-title>
-              <ion-icon [name]="isCorrect ? 'checkmark-circle' : 'close-circle'"></ion-icon>
+              <ion-icon
+                [name]="isCorrect ? 'checkmark-circle' : 'close-circle'"
+              ></ion-icon>
               {{ isCorrect ? 'Correto!' : 'Incorreto!' }}
             </ion-card-title>
           </ion-card-header>
@@ -75,9 +87,9 @@
       </div>
 
       <div class="action-buttons">
-        <ion-button 
+        <ion-button
           *ngIf="!showExplanation"
-          expand="block" 
+          expand="block"
           size="large"
           [disabled]="selectedAnswer === null"
           (click)="submitAnswer()"
@@ -87,19 +99,20 @@
           Confirmar Resposta
         </ion-button>
 
-        <ion-button 
+        <ion-button
           *ngIf="showExplanation"
-          expand="block" 
+          expand="block"
           size="large"
           (click)="nextQuestion()"
           class="next-button"
           color="secondary"
         >
           <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-          {{ quizService.getCurrentQuestionIndex() + 1 < quizService.getTotalQuestions() ? 'Próxima Pergunta' : 'Ver Resultados' }}
+          {{ quizService.getCurrentQuestionIndex() + 1 <
+          quizService.getTotalQuestions() ? 'Próxima Pergunta' : 'Ver
+          Resultados' }}
         </ion-button>
       </div>
     </div>
   </div>
 </ion-content>
-

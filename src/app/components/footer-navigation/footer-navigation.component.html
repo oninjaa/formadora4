@@ -1,6 +1,7 @@
 <ion-footer>
   <ion-tab-bar>
     <ion-tab-button
+      [hidden]="hasUser ? false : true"
       [routerLink]="['/conteudo']"
       [class.active]="currentPage === 'conteudo'"
     >

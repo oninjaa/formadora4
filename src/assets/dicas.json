@@ -1,0 +1,32 @@
+{
+  "pirataria_e_uso_etico": [
+    {"dica": "Prefira software livre ou licenciado corretamente; no quiz, escolha alternativas que citam licença ou fonte oficial.", "relacionado": ["quiz"]},
+    {"dica": "Explique no jogo da forca termos como 'open-source' e por que são éticos; isso reforça o uso responsável.", "relacionado": ["hangman"]},
+    {"dica": "Ao estudar casos no quiz, destaque alternativas que respeitam direitos autorais.", "relacionado": ["quiz","hangman"]}
+  ],
+  "direitos_digitais_e_contratos_virtuais": [
+    {"dica": "Leia cláusulas importantes antes de aceitar; no quiz, marque a opção que menciona consentimento informado.", "relacionado": ["quiz"]},
+    {"dica": "No hangman, mostre definições como 'consentimento' e explique seu impacto em contratos digitais.", "relacionado": ["hangman"]},
+    {"dica": "Use exemplos reais no quiz para aprender a identificar clausulas abusivas ou ocultas.", "relacionado": ["quiz"]}
+  ],
+  "inclusao_digital_e_acessibilidade": [
+    {"dica": "Sempre ofereça alternativas de entrada (teclado, voz) e textos claros; no quiz, priorize legibilidade nas respostas.", "relacionado": ["quiz"]},
+    {"dica": "No jogo da forca, permita controle por teclado e forneça feedback sonoro para acessibilidade.", "relacionado": ["hangman"]},
+    {"dica": "Ofereça contraste alto e fontes ajustáveis; isso melhora perfomance em testes do quiz e a usabilidade do jogo.", "relacionado": ["quiz","hangman"]}
+  ],
+  "sustentabilidade_e_lixo_eletronico": [
+    {"dica": "Descartar corretamente aparelhos antigos: entregue em pontos de coleta; no quiz, selecione essa alternativa como correta.", "relacionado": ["quiz"]},
+    {"dica": "Inclua palavras como 'reciclagem' no hangman e, ao concluir, mostre uma dica prática de descarte.", "relacionado": ["hangman"]},
+    {"dica": "Considere modos de baixo consumo (menos animações) para reduzir energia durante o jogo e estudo.", "relacionado": ["hangman","quiz"]}
+  ],
+  "protecao_de_dados_pessoais": [
+    {"dica": "Nunca compartilhe senhas ou dados sensíveis em chats; o quiz reforça isso como comportamento correto.", "relacionado": ["quiz","hangman"]},
+    {"dica": "Use senhas fortes e gerenciadores; no hangman, explique por que 'senha' é sensível e como criar uma boa.", "relacionado": ["hangman"]},
+    {"dica": "Peça a exclusão de dados quando necessário: a LGPD garante esse direito — destaque no quiz.", "relacionado": ["quiz"]}
+  ],
+  "seguranca_da_informacao_e_legislacao_lgpd": [
+    {"dica": "Aprenda a identificar phishing: no quiz escolha ações como 'ignorar/excluir/reportar'.", "relacionado": ["quiz"]},
+    {"dica": "No hangman, inclua termos como 'vazamento' e explique medidas práticas (backup, criptografia).", "relacionado": ["hangman"]},
+    {"dica": "Ao errar perguntas sobre LGPD, mostre o princípio relevante (consentimento, minimização, finalidade).", "relacionado": ["quiz"]}
+  ]
+}

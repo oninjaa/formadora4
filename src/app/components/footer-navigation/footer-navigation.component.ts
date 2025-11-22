@@ -14,6 +14,8 @@ import { helpOutline, homeOutline,gameControllerOutline} from 'ionicons/icons';
 })
 export class FooterNavigationComponent {
   @Input() currentPage: 'welcome' | 'conteudo' | 'about' = 'welcome';
+  // controla se a aba 'Conteúdo' deve ser exibida
+  @Input() hasUser: boolean = false;
   constructor() {
     addIcons({ helpOutline, homeOutline,gameControllerOutline});}
 

@@ -1,23 +1,76 @@
-<ion-content
-  [fullscreen]="true"
-  class="ion-padding"
-  style="padding-bottom: 70px"
->
+<ion-content [fullscreen]="true">
   <div class="test">
     <div class="welcome-container">
       <!-- Menu Principal (quando usuário já está cadastrado) -->
       <div class="main-menu" *ngIf="hasUser">
         <div class="user-greeting"></div>
 
+        <!-- Resumo curto do projeto (máx. 10 linhas) -->
+        <div
+          style="text-align: center"
+          class="project-summary"
+          aria-live="polite"
+        >
+          <h1>Resumo do projeto</h1>
+          <p><strong>Problema social:</strong></p>
+          <p>
+            Falta de conhecimento sobre privacidade, segurança e ética digital
+            entre estudantes e cidadãos.
+          </p>
+          <p>
+            <strong>Como promove cidadania:</strong>
+          </p>
+          <p>
+            Educação por meio de quizzes e jogos que estimulam decisões digitais
+            responsáveis e reflexão ética.
+          </p>
+          <p>
+            <strong>Recursos técnicos:</strong>
+          </p>
+          <p>
+            botões e navegação por rotas, ícones (ion-icon), formulários,
+            armazenamento local (localStorage) para histórico; suportes para
+            imagens e sons.
+          </p>
+        </div>
+
+        <div class="tips-display" *ngIf="displayedTips?.length">
+          <div
+            class="tips-header"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              justify-content: space-between;
+            "
+          >
+            <h1 style="margin: 0">Dicas rápidas</h1>
+            <ion-button fill="clear" size="small" (click)="triggerRefreshTips()"
+              >Trocar dicas</ion-button
+            >
+          </div>
+          <div class="tips-list" [class.animating]="tipsAnimating">
+            <div
+              *ngFor="let d of displayedTips"
+              class="single-tip"
+              style="margin: 10px 0"
+            >
+              <h2 style="margin: 0 0 6px 0">
+                {{ formatCategory(d.category) }}
+              </h2>
+              <p style="margin: 0">{{ d.tip.dica }}</p>
+            </div>
+          </div>
+        </div>
+
         <ion-button
-          expand="block"
-          fill="clear"
-          color="medium"
+          fill="outline"
+          color="primary"
           (click)="changeUser()"
           class="change-user-button"
         >
           <ion-icon name="person-outline" slot="start"></ion-icon>
-          Trocar de Usuário
+          Sair
         </ion-button>
       </div>
 
@@ -37,7 +90,7 @@
         </div>
 
         <div class="input-section">
-          <ion-item class="name-input" (click)="onItemClick()">
+          <ion-item class="name-input">
             <ion-label position="stacked">Digite seu nome</ion-label>
             <ion-input
               #nameInput
@@ -67,20 +120,14 @@
             <ion-icon name="play-outline" slot="start"></ion-icon>
             Entrar
           </ion-button>
-          <!-- Botão de debug (sempre habilitado) para testar clique -->
-          <ion-button
-            expand="block"
-            size="small"
-            color="tertiary"
-            (click)="onStartClick()"
-            class="debug-start"
-          >
-            Debug Entrar
-          </ion-button>
+          <!-- debug button removido -->
         </div>
       </div>
     </div>
   </div>
 </ion-content>
 
-<app-footer-navigation currentPage="welcome"></app-footer-navigation>
+<app-footer-navigation
+  [currentPage]="'welcome'"
+  [hasUser]="hasUser"
+></app-footer-navigation>

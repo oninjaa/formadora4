@@ -19,12 +19,15 @@ export class QuizPage implements OnInit {
   showExplanation: boolean = false;
   isCorrect: boolean = false;
   progress: number = 0;
+  headerVisible: boolean = true;
+  private _lastScrollTop: number = 0;
 
   constructor(
     private router: Router,
     public quizService: QuizService,
     private alertController: AlertController
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
@@ -34,12 +37,24 @@ export class QuizPage implements OnInit {
     this.loadQuestion();
   }
 
+  onScroll(event: any): void {
+    const scrollTop = event && event.detail ? event.detail.scrollTop : 0;
+    const delta = scrollTop - this._lastScrollTop;
+    // reduzir limiar para comportamento mais responsivo (igual ao Hangman)
+    if (delta > 2) {
+      this.headerVisible = false;
+    } else if (delta < -5) {
+      this.headerVisible = true;
+    }
+    this._lastScrollTop = scrollTop;
+  }
+
   loadQuestion(): void {
     this.currentQuestion = this.quizService.getCurrentQuestion();
     this.selectedAnswer = null;
     this.showExplanation = false;
     this.updateProgress();
-    
+
     // Embaralha as opções
     if (this.currentQuestion) {
       this.shuffleOptions();
@@ -48,22 +63,22 @@ export class QuizPage implements OnInit {
 
   shuffleOptions(): void {
     if (!this.currentQuestion) return;
-    
+
     // Cria um array de objetos com opção e índice original
     const optionsWithIndex = this.currentQuestion.options.map((option, index) => ({
       option,
       originalIndex: index
     }));
-    
+
     // Embaralha o array
     for (let i = optionsWithIndex.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [optionsWithIndex[i], optionsWithIndex[j]] = [optionsWithIndex[j], optionsWithIndex[i]];
     }
-    
+
     // Extrai as opções embaralhadas
     this.shuffledOptions = optionsWithIndex.map(item => item.option);
-    
+
     // Encontra o novo índice da resposta correta
     this.correctAnswerIndex = optionsWithIndex.findIndex(
       item => item.originalIndex === this.currentQuestion!.correctAnswer
@@ -108,17 +123,17 @@ export class QuizPage implements OnInit {
     if (!this.showExplanation) {
       return this.selectedAnswer === index ? 'selected' : '';
     }
-    
+
     // Mostra a resposta correta (índice embaralhado)
     if (index === this.correctAnswerIndex) {
       return 'correct';
     }
-    
+
     // Mostra a resposta incorreta selecionada
     if (index === this.selectedAnswer && !this.isCorrect) {
       return 'incorrect';
     }
-    
+
     return '';
   }
 
@@ -148,7 +163,7 @@ export class QuizPage implements OnInit {
         }
       ]
     });
-    
+
     await alert.present();
   }
 
@@ -169,14 +184,14 @@ export class QuizPage implements OnInit {
         }
       ]
     });
-    
+
     await alert.present();
   }
 
   async exitQuiz(): Promise<void> {
     const currentQuestion = this.quizService.getCurrentQuestionIndex() + 1;
     const totalQuestions = this.quizService.getTotalQuestions();
-    
+
     const alert = await this.alertController.create({
       header: 'Sair do Quiz',
       message: `Você está na pergunta ${currentQuestion} de ${totalQuestions}. Deseja voltar ao menu principal? Seu progresso será perdido.`,
@@ -186,16 +201,16 @@ export class QuizPage implements OnInit {
           role: 'cancel'
         },
         {
-          text: 'Voltar ao Menu',
+          text: 'Voltar ao Menu de Escolhas',
           role: 'destructive',
           handler: () => {
             this.quizService.reset();
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/conteudo']);
           }
         }
       ]
     });
-    
+
     await alert.present();
   }
 }

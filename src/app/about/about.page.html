@@ -64,7 +64,9 @@
       </div>
     </div>
   </div>
-
 </ion-content>
 
-<app-footer-navigation currentPage="about"></app-footer-navigation>
+<app-footer-navigation
+  [currentPage]="'about'"
+  [hasUser]="hasUser"
+></app-footer-navigation>

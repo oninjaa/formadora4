@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { QuizService, UserStats, QuizAttempt, HangmanStats, HangmanGame } from '../services/quiz.service';
@@ -13,12 +13,13 @@ import { QuizService, UserStats, QuizAttempt, HangmanStats, HangmanGame } from '
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class StatisticsPage implements OnInit {
+  titleVisible: boolean = true;
   stats: UserStats | null = null;
   categoryStats: { [category: string]: { correct: number; total: number; percentage: number } } = {};
   categoryStatsArray: Array<{ key: string; value: { correct: number; total: number; percentage: number } }> = [];
   recentAttempts: QuizAttempt[] = [];
   showAllAttempts: boolean = false;
-  
+
   // Estatísticas do jogo da forca
   hangmanStats: HangmanStats | null = null;
   recentHangmanGames: HangmanGame[] = [];
@@ -27,8 +28,38 @@ export class StatisticsPage implements OnInit {
 
   constructor(
     private router: Router,
-    private quizService: QuizService
+    private quizService: QuizService,
+    private alertController: AlertController
   ) {}
+
+  async exitStatistics(): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Sair das Estatísticas',
+      message: 'Deseja voltar ao menu principal?',
+      buttons: [
+        {
+          text: 'Continuar',
+          role: 'cancel'
+        },
+        {
+          text: 'Voltar ao Menu',
+          role: 'destructive',
+          handler: () => {
+            this.router.navigate(['/conteudo']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  onScroll(event: any): void {
+    // event.detail.scrollTop is provided by IonContent scroll events
+    const scrollTop = event && event.detail ? event.detail.scrollTop : 0;
+    // reduzir limiar para esconder o título mais rápido (5px)
+    this.titleVisible = scrollTop <= 5;
+  }
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
@@ -47,18 +78,18 @@ export class StatisticsPage implements OnInit {
   loadStats(): void {
     this.stats = this.quizService.getUserStats();
     this.categoryStats = this.quizService.getCategoryStats();
-    
+
     // Converte para array para usar no template
     this.categoryStatsArray = Object.keys(this.categoryStats).map(key => ({
       key: key,
       value: this.categoryStats[key]
     }));
-    
+
     // Pega as últimas 5 tentativas (mais recentes primeiro)
     this.recentAttempts = [...this.stats.attempts]
       .reverse()
       .slice(0, this.showAllAttempts ? undefined : 5);
-    
+
     // Carrega estatísticas do jogo da forca
     this.hangmanStats = this.quizService.getHangmanStats();
     const hangmanHistory = this.quizService.getHangmanHistory();
@@ -138,14 +169,14 @@ export class StatisticsPage implements OnInit {
 
   getTrendIcon(): string {
     if (!this.stats || this.stats.attempts.length < 2) return 'remove-outline';
-    
+
     const recent = this.stats.attempts.slice(-5);
     const firstHalf = recent.slice(0, Math.ceil(recent.length / 2));
     const secondHalf = recent.slice(Math.ceil(recent.length / 2));
-    
+
     const avgFirst = firstHalf.reduce((acc, a) => acc + a.percentage, 0) / firstHalf.length;
     const avgSecond = secondHalf.reduce((acc, a) => acc + a.percentage, 0) / secondHalf.length;
-    
+
     if (avgSecond > avgFirst + 5) return 'trending-up';
     if (avgSecond < avgFirst - 5) return 'trending-down';
     return 'remove-outline';
@@ -165,7 +196,7 @@ export class StatisticsPage implements OnInit {
     if (this.stats.attempts.length === 1) {
       return 'Continue fazendo quizzes para ver sua evolução!';
     }
-    
+
     const trend = this.getTrendIcon();
     if (trend === 'trending-up') {
       return 'Parabéns! Você está evoluindo! 🚀';

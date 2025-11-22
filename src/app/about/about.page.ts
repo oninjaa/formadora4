@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { helpOutline, homeOutline,gameControllerOutline} from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { FooterNavigationComponent } from '../components/footer-navigation/footer-navigation.component';
+import { QuizService } from '../services/quiz.service';
 
 @Component({
   selector: 'app-about',
@@ -14,11 +15,12 @@ import { FooterNavigationComponent } from '../components/footer-navigation/foote
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, FooterNavigationComponent]
 })
-export class AboutPage {
+export class AboutPage implements AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
+  public hasUser = false;
 
-  constructor(private router: Router) {
-
+  constructor(private router: Router, private quizService: QuizService) {
+    this.hasUser = this.quizService.hasUserName();
   }
 
   ngAfterViewInit(): void {

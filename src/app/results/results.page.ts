@@ -18,6 +18,9 @@ export class ResultsPage implements OnInit {
   percentage: number = 0;
   message: string = '';
   messageColor: string = '';
+  // estatísticas por categoria (agregado de histórico)
+  categoryStats: { [category: string]: { correct: number; total: number; percentage: number } } = {};
+  categoryStatsArray: Array<{ key: string; value: { correct: number; total: number; percentage: number } }> = [];
 
   constructor(
     private router: Router,
@@ -35,9 +38,33 @@ export class ResultsPage implements OnInit {
     this.totalQuestions = this.quizService.getTotalQuestions();
     this.percentage = this.quizService.getPercentage();
     this.setMessage();
-    
+
     // Salva a tentativa no histórico
     this.quizService.saveAttempt();
+
+    // Carrega estatísticas por categoria agregadas do histórico
+    this.categoryStats = this.quizService.getCategoryStats();
+    this.categoryStatsArray = Object.keys(this.categoryStats).map(key => ({
+      key,
+      value: this.categoryStats[key]
+    }));
+  }
+
+  getCategoryIcon(category: string): string {
+    if (category.includes('Pirataria')) return 'shield-checkmark-outline';
+    if (category.includes('Direitos')) return 'document-text-outline';
+    if (category.includes('Inclusão')) return 'people-outline';
+    if (category.includes('Sustentabilidade')) return 'leaf-outline';
+    if (category.includes('Proteção')) return 'lock-closed-outline';
+    if (category.includes('Segurança')) return 'newspaper-outline';
+    return 'help-circle-outline';
+  }
+
+  getCategoryColor(percentage: number): string {
+    if (percentage >= 80) return 'success';
+    if (percentage >= 60) return 'primary';
+    if (percentage >= 40) return 'warning';
+    return 'danger';
   }
 
   setMessage(): void {
@@ -68,14 +95,6 @@ export class ResultsPage implements OnInit {
     this.router.navigate(['/quiz']);
   }
 
-  goHome(): void {
-    this.router.navigate(['/quiz']);
-  }
-
-  changeUser(): void {
-    this.quizService.clearUserName();
-    this.router.navigate(['/welcome']);
-  }
 
   viewStats(): void {
     this.router.navigate(['/statistics']);
@@ -83,7 +102,7 @@ export class ResultsPage implements OnInit {
 
   shareResults(): void {
     const text = `Completei o Quiz de Ética Digital! Acertei ${this.score} de ${this.totalQuestions} perguntas (${this.percentage}%)!`;
-    
+
     if (navigator.share) {
       navigator.share({
         title: 'Quiz de Ética Digital',

@@ -1,16 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/welcome"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Jogo da Forca</ion-title>
- 
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar
+  color="Dark"
+  [class.transparent-bar]="!headerVisible"
+  [class.dark-bar]="headerVisible"
+  [class.compact]="!headerVisible"
+>
+  <ion-buttons slot="start">
+    <ion-button (click)="exitHangman()">
+      <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+      Sair
+    </ion-button>
+  </ion-buttons>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-title style="text-align: center">
+    <ion-icon name="skull-outline"></ion-icon>
+    Jogo da Forca
+  </ion-title>
+</ion-toolbar>
+<ion-content
+  [fullscreen]="true"
+  class="ion-padding"
+  (ionScroll)="onScroll($event)"
+  [scrollEvents]="true"
+>
   <div class="hangman-container" *ngIf="currentWord">
-    
     <!-- Placar -->
     <div class="score-board">
       <ion-chip color="success">
@@ -54,7 +66,9 @@
           <div class="right-leg" [class.visible]="wrongGuesses >= 6"></div>
         </div>
         <div class="attempts-counter">
-          <ion-badge [color]="wrongGuesses >= 5 ? 'danger' : wrongGuesses >= 3 ? 'warning' : 'primary'">
+          <ion-badge
+            [color]="wrongGuesses >= 5 ? 'danger' : wrongGuesses >= 3 ? 'warning' : 'primary'"
+          >
             {{ wrongGuesses }} / {{ maxWrongGuesses }} erros
           </ion-badge>
         </div>
@@ -62,8 +76,8 @@
 
       <!-- Palavra -->
       <div class="word-display">
-        <div 
-          class="letter-box" 
+        <div
+          class="letter-box"
           *ngFor="let letter of displayWord; let i = index"
           [class.revealed]="letter !== '_'"
         >
@@ -87,19 +101,33 @@
     </div>
 
     <!-- Resultado -->
-    <ion-card *ngIf="gameOver" [color]="won ? 'success' : 'danger'" class="result-card">
+    <ion-card
+      *ngIf="gameOver"
+      [color]="won ? 'success' : 'danger'"
+      class="result-card"
+    >
       <ion-card-content>
         <div class="result-content">
-          <ion-icon [name]="won ? 'trophy' : 'close-circle'" class="result-icon"></ion-icon>
+          <ion-icon
+            [name]="won ? 'trophy' : 'close-circle'"
+            class="result-icon"
+          ></ion-icon>
           <h2>{{ won ? 'Parabéns! 🎉' : 'Que pena! 😢' }}</h2>
           <p *ngIf="won">Você acertou a palavra!</p>
-          <p *ngIf="!won">A palavra era: <strong>{{ currentWord.word }}</strong></p>
+          <p *ngIf="!won">
+            A palavra era: <strong>{{ currentWord.word }}</strong>
+          </p>
           <div class="result-actions">
             <ion-button expand="block" (click)="playAgain()" color="light">
               <ion-icon name="refresh-outline" slot="start"></ion-icon>
               Jogar Novamente
             </ion-button>
-            <ion-button expand="block" (click)="goBack()" fill="clear" color="light">
+            <ion-button
+              expand="block"
+              (click)="goBack()"
+              fill="clear"
+              color="light"
+            >
               <ion-icon name="home-outline" slot="start"></ion-icon>
               Voltar ao Menu
             </ion-button>
@@ -107,7 +135,5 @@
         </div>
       </ion-card-content>
     </ion-card>
-
   </div>
 </ion-content>
-

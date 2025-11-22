@@ -4,6 +4,31 @@
   padding-bottom: 20px;
 }
 
+/* Compact toolbar when scrolling down */
+ion-toolbar.compact,
+ion-header ion-toolbar.compact {
+  transform: translateY(-100%);
+  transition: transform 220ms ease-in;
+}
+ion-toolbar,
+ion-header ion-toolbar {
+  transition: transform 220ms ease-out;
+}
+
+/* Transparent toolbar variant used when headerHidden */
+ion-toolbar.transparent-bar,
+ion-header ion-toolbar.transparent-bar {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Make toolbar sticky so translateY hides it reliably */
+ion-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
 // Placar
 .score-board {
   display: flex;
@@ -13,7 +38,7 @@
 
   ion-chip {
     font-weight: 600;
-    
+
     ion-icon {
       margin-right: 4px;
     }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { QuizService, HangmanGame } from '../services/quiz.service';
-
 interface HangmanWord {
   word: string;
   hint: string;
@@ -18,6 +17,8 @@ interface HangmanWord {
   imports: [IonicModule, CommonModule]
 })
 export class HangmanPage implements OnInit {
+  headerVisible: boolean = true;
+  private _lastScrollTop: number = 0;
   words: HangmanWord[] = [
     { word: 'LGPD', hint: 'Lei de proteção de dados no Brasil', category: 'Legislação' },
     { word: 'PHISHING', hint: 'Técnica de fraude online para roubar dados', category: 'Segurança' },
@@ -54,8 +55,35 @@ export class HangmanPage implements OnInit {
 
   constructor(
     private router: Router,
-    private quizService: QuizService
-  ) {}
+    private quizService: QuizService,
+    private alertController: AlertController
+  ) {
+  }
+
+  async exitHangman(): Promise<void> {
+    // mostra aviso semelhante ao Quiz
+    const alert = await this.alertController.create({
+      header: 'Sair do Jogo',
+      message: `Você tem ${this.wrongGuesses} de ${this.maxWrongGuesses} erros. Deseja voltar ao menu principal? Seu progresso será perdido.`,
+      buttons: [
+        {
+          text: 'Continuar Jogo',
+          role: 'cancel'
+        },
+        {
+          text: 'Voltar ao Menu de Escolhas',
+          role: 'destructive',
+          handler: () => {
+            // descarta o jogo atual e volta ao menu
+            this.startNewGame();
+            this.router.navigate(['/conteudo']);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
   ngOnInit(): void {
     if (!this.quizService.getUserName()) {
@@ -64,6 +92,18 @@ export class HangmanPage implements OnInit {
     }
     this.loadStats();
     this.startNewGame();
+  }
+
+  onScroll(event: any): void {
+    const scrollTop = event && event.detail ? event.detail.scrollTop : 0;
+    const delta = scrollTop - this._lastScrollTop;
+    // reduzir limiar para esconder o header mais rápido
+    if (delta > 2) {
+      this.headerVisible = false;
+    } else if (delta < -5) {
+      this.headerVisible = true;
+    }
+    this._lastScrollTop = scrollTop;
   }
 
   loadStats(): void {
@@ -76,10 +116,10 @@ export class HangmanPage implements OnInit {
     // Seleciona palavra aleatória
     const randomIndex = Math.floor(Math.random() * this.words.length);
     this.currentWord = this.words[randomIndex];
-    
+
     // Inicializa o display da palavra
     this.displayWord = this.currentWord.word.split('').map(() => '_');
-    
+
     // Reset do jogo
     this.guessedLetters = [];
     this.wrongGuesses = 0;
@@ -147,7 +187,7 @@ export class HangmanPage implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/welcome']);
+    this.router.navigate(['/conteudo']);
   }
 
   getUserName(): string {

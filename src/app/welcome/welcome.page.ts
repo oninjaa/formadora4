@@ -14,10 +14,15 @@ import { FooterNavigationComponent } from '../components/footer-navigation/foote
   standalone: true,
   imports: [IonicModule, FormsModule, CommonModule, FooterNavigationComponent]
 })
-export class WelcomePage implements OnInit {
+export class WelcomePage implements OnInit, AfterViewInit {
   userName: string = '';
   hasUser: boolean = false;
   currentUserName: string = '';
+
+  // dicas
+  tipsData: Record<string, { dica: string; relacionado?: string[] }[]> = {};
+  displayedTips: Array<{ category: string; tip: { dica: string; relacionado?: string[] } }> = [];
+  tipsAnimating = false;
 
   @ViewChild('nameInput') nameInput?: IonInput;
 
@@ -34,6 +39,55 @@ export class WelcomePage implements OnInit {
       this.hasUser = true;
       this.currentUserName = this.quizService.getUserName();
     }
+
+    // Carrega as dicas do arquivo assets/dicas.json
+    this.loadTips();
+  }
+
+  private async loadTips() {
+    try {
+      const resp = await fetch('assets/dicas.json');
+      if (!resp.ok) return;
+      const data = await resp.json();
+      this.tipsData = data;
+      this.refreshTips();
+    } catch (e) {
+      // falha no fetch -> mantemos sem dicas
+      console.warn('Não foi possível carregar dicas:', e);
+    }
+  }
+
+  // seleciona 3 dicas únicas aleatórias (de quaisquer categorias)
+  // método interno — atualiza imediatamente
+  refreshTips() {
+    const pool: Array<{ category: string; tip: { dica: string; relacionado?: string[] } }> = [];
+    for (const cat of Object.keys(this.tipsData || {})) {
+      const arr = this.tipsData[cat] || [];
+      for (const t of arr) pool.push({ category: cat, tip: t });
+    }
+
+    // embaralha e pega até 3
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    this.displayedTips = pool.slice(0, 3);
+  }
+
+  // Método que dispara animação e troca as dicas
+  triggerRefreshTips() {
+    if (!this.tipsData || Object.keys(this.tipsData).length === 0) return;
+    // liga animação, espera, trocando dicas logo em seguida
+    this.tipsAnimating = true;
+    setTimeout(() => {
+      this.refreshTips();
+      // pequena pausa para deixar a transição perceptível
+      setTimeout(() => (this.tipsAnimating = false), 120);
+    }, 260);
+  }
+
+  formatCategory(cat: string) {
+    return cat ? cat.replace(/_/g, ' ') : '';
   }
 
   // tenta focar o input após a visualização para verificar se o campo aceita entrada
@@ -42,30 +96,17 @@ export class WelcomePage implements OnInit {
     setTimeout(() => {
       try {
         this.nameInput?.setFocus();
-        console.log('[debug] tentou setFocus no input de nome');
       } catch (e) {
-        console.warn('[debug] falha ao focar input', e);
+        // debug removido: falha ao focar input é silenciosa em produção
       }
     }, 300);
   }
 
   onInputClick(): void {
-    console.log('[debug] ion-input clicado');
+    // debug removido
   }
 
-  onItemClick(): void {
-    console.log('[debug] ion-item (container) clicado');
-  }
 
-  onStartClick(): void {
-    console.log('[debug] botão Entrar (debug) clicado; userName=', this.userName);
-    // tentar chamar startQuiz mesmo que o botão principal esteja desabilitado
-    try {
-      this.startQuiz();
-    } catch (e) {
-      console.warn('[debug] falha ao chamar startQuiz via onStartClick', e);
-    }
-  }
 
   startQuiz(): void {
     if (this.userName.trim()) {

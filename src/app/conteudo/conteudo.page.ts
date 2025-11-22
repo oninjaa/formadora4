@@ -17,6 +17,7 @@ import { AlertController } from '@ionic/angular';
 export class ConteudoPage implements OnInit {
 
   public currentUserName = '';
+  public hasUser = false;
 
   constructor(private router: Router, private quizService: QuizService, private alertCtrl: AlertController) { }
 
@@ -39,6 +40,7 @@ export class ConteudoPage implements OnInit {
       return;
     }
     this.currentUserName = this.quizService.getUserName();
+    this.hasUser = true;
   }
 
   goToQuiz(): void {
