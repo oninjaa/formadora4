@@ -138,6 +138,9 @@
           <div *ngIf="!hasCategoryStats()" class="empty-state">
             <ion-icon name="school-outline"></ion-icon>
             <p>Faça um quiz para ver seu desempenho por categoria!</p>
+            <ion-button (click)="goToQuiz()" color="primary">
+              Fazer Primeiro Quiz
+            </ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -203,24 +206,13 @@
           <div *ngIf="stats.attempts.length === 0" class="empty-state">
             <ion-icon name="clipboard-outline"></ion-icon>
             <p>Nenhum quiz realizado ainda.</p>
-            <ion-button (click)="goToQuiz()" color="primary">
-              Fazer Primeiro Quiz
-            </ion-button>
           </div>
         </ion-card-content>
       </ion-card>
 
       <!-- Ações -->
       <div class="action-buttons">
-        <ion-button
-          expand="block"
-          size="large"
-          (click)="goToQuiz()"
-          color="primary"
-        >
-          <ion-icon name="play-outline" slot="start"></ion-icon>
-          Fazer Novo Quiz
-        </ion-button>
+
 
         <ion-button
           *ngIf="stats.attempts.length > 0"
@@ -362,7 +354,7 @@
           <div *ngIf="hangmanStats.gamesPlayed === 0" class="empty-state">
             <ion-icon name="game-controller-outline"></ion-icon>
             <p>Nenhum jogo realizado ainda.</p>
-            <ion-button routerLink="/hangman" color="secondary">
+            <ion-button routerLink="/hangman" (click)="goToHangman()" color="secondary">
               Jogar Agora
             </ion-button>
           </div>
@@ -371,15 +363,7 @@
 
       <!-- Ações -->
       <div class="action-buttons">
-        <ion-button
-          expand="block"
-          size="large"
-          routerLink="/hangman"
-          color="secondary"
-        >
-          <ion-icon name="play-outline" slot="start"></ion-icon>
-          Jogar Forca
-        </ion-button>
+
 
         <ion-button
           *ngIf="hangmanStats.gamesPlayed > 0"
@@ -402,9 +386,5 @@
     <ion-icon name="bar-chart-outline" class="empty-icon"></ion-icon>
     <h2>Nenhuma Estatística Ainda</h2>
     <p>Faça seu primeiro quiz para ver suas estatísticas e evolução!</p>
-    <ion-button (click)="goToQuiz()" size="large" color="primary">
-      <ion-icon name="rocket-outline" slot="start"></ion-icon>
-      Começar Agora
-    </ion-button>
   </div>
 </ion-content>

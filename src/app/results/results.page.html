@@ -43,7 +43,7 @@
 
         <ion-card class="stat-card">
           <ion-card-content>
-            <ion-icon name="help-circle" color="primary"></ion-icon>
+            <ion-icon name="school-outline" color="primary"></ion-icon>
             <div class="stat-value">{{ totalQuestions }}</div>
             <div class="stat-label">Total</div>
           </ion-card-content>
@@ -108,7 +108,7 @@
           class="action-button"
         >
           <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
-          Ver Estatísticas e Evolução
+          Ver Estatísticas
         </ion-button>
 
         <ion-button
@@ -118,22 +118,9 @@
           color="secondary"
           class="action-button"
         >
-          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          <ion-icon name="refresh-outline"></ion-icon>
           Refazer Quiz
         </ion-button>
-
-        <ion-button
-          expand="block"
-          size="large"
-          (click)="shareResults()"
-          fill="outline"
-          class="action-button"
-        >
-          <ion-icon name="share-social-outline" slot="start"></ion-icon>
-          Compartilhar
-        </ion-button>
-
-        <!-- 'Fazer Novo Quiz' e 'Trocar de Usuário' removidos conforme solicitado -->
       </div>
     </div>
   </div>

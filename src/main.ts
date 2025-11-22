@@ -27,6 +27,7 @@ import {
   lockClosedOutline,
   newspaperOutline,
   arrowBackOutline,
+  arrowForwardOutline,
   skullOutline,
   folderOutline,
   bulbOutline,
@@ -48,6 +49,8 @@ import {
   medal,
   flame,
   trendingUp,
+  refreshOutline,
+  batteryChargingOutline
 
 
 } from 'ionicons/icons';
@@ -64,6 +67,7 @@ bootstrapApplication(AppComponent, {
 addIcons({
   'person-circle': personCircle,
   'person-outline': personOutline,
+  'school': schoolOutline,
   'school-outline': schoolOutline,
   'play-outline': playOutline,
   'game-controller-outline': gameControllerOutline,
@@ -83,6 +87,7 @@ addIcons({
   'lock-closed-outline': lockClosedOutline,
   'newspaper-outline': newspaperOutline,
   'arrow-back-outline':arrowBackOutline,
+  'arrow-forward-outline': arrowForwardOutline,
   'skull-outline': skullOutline,
   'folder-outline': folderOutline,
   'bulb-outline': bulbOutline,
@@ -104,4 +109,5 @@ addIcons({
   'medal': medal,
   'flame': flame,
   'trending-up': trendingUp,
+  'refresh-outline': refreshOutline,
 });

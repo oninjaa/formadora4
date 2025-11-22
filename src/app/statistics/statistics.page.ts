@@ -223,5 +223,9 @@ export class StatisticsPage implements OnInit {
       this.loadStats();
     }
   }
+  
+   goToHangman(): void {
+    this.router.navigate(['/hangman']);
+  }
 }
 

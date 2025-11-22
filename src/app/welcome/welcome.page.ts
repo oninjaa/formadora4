@@ -52,8 +52,7 @@ export class WelcomePage implements OnInit, AfterViewInit {
       this.tipsData = data;
       this.refreshTips();
     } catch (e) {
-      // falha no fetch -> mantemos sem dicas
-      console.warn('Não foi possível carregar dicas:', e);
+      // falha no fetch -> mantemos sem dicas (silencioso em produção)
     }
   }
 
@@ -97,13 +96,13 @@ export class WelcomePage implements OnInit, AfterViewInit {
       try {
         this.nameInput?.setFocus();
       } catch (e) {
-        // debug removido: falha ao focar input é silenciosa em produção
+        // foco falhou — comportamento silencioso em produção
       }
     }, 300);
   }
 
   onInputClick(): void {
-    // debug removido
+    // tempo reservado para manipulador de clique do input
   }
 
 
